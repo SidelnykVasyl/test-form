@@ -1,0 +1,29 @@
+<form #f="ngForm" [formGroup]="contactForm" (ngSubmit)="onSubmit()">
+  <mat-form-field style="width: 100%" class="mb-3">
+    <ngx-mat-intl-tel-input
+      [cssClass]="'custom'"
+      [enablePlaceholder]="true"
+      placeholder="Enter Number"
+      [enableSearch]="true"
+      [onlyCountries]="['us']"
+      name="phone"
+      formControlName="phone"
+      #phone
+    ></ngx-mat-intl-tel-input>
+    <mat-hint>e.g. {{ phone.selectedCountry.placeHolder }}</mat-hint>
+    <mat-error *ngIf="f.form.controls['phone']?.errors?.required"
+      >Required Field</mat-error
+    >
+    <mat-error
+      *ngIf="
+        f.submitted && f.form.controls['phone']?.errors?.validatePhoneNumber
+      "
+      >Invalid Number</mat-error
+    >
+  </mat-form-field>
+  <mat-form-field class="example-full-width mb-3" appearance="legacy">
+    <mat-label>Email</mat-label>
+    <input matInput placeholder="some@gmail.com" formControlName="email" />
+  </mat-form-field>
+  <button [disabled]="!f.valid" mat-raised-button color="primary">Next</button>
+</form>

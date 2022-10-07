@@ -1,0 +1,13 @@
+<form [formGroup]="personalForm" (ngSubmit)="onSubmit()" class="personal-info">
+  <mat-form-field class="example-full-width mb-3" appearance="legacy">
+    <mat-label>First Name</mat-label>
+    <input matInput placeholder="John" formControlName="firstName" />
+  </mat-form-field>
+  <mat-form-field class="example-full-width mb-3" appearance="legacy">
+    <mat-label>Last Name</mat-label>
+    <input matInput placeholder="Dou" formControlName="lastName" />
+  </mat-form-field>
+  <button [disabled]="!personalForm.valid" mat-raised-button color="primary">
+    Next
+  </button>
+</form>

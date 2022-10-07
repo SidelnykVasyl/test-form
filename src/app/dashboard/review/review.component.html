@@ -1,0 +1,102 @@
+<form #f="ngForm" [formGroup]="form">
+  <mat-form-field class="example-full-width mb-3" appearance="legacy">
+    <mat-label>First Name</mat-label>
+    <input matInput placeholder="John" formControlName="firstName" />
+  </mat-form-field>
+  <mat-form-field class="example-full-width mb-3" appearance="legacy">
+    <mat-label>Last Name</mat-label>
+    <input matInput placeholder="Dou" formControlName="lastName" />
+  </mat-form-field>
+
+  <mat-form-field class="mb-3">
+    <ngx-mat-intl-tel-input
+      [cssClass]="'custom'"
+      [preferredCountries]="['us']"
+      [enablePlaceholder]="true"
+      placeholder="Enter Number"
+      [enableSearch]="true"
+      [onlyCountries]="['us']"
+      [searchPlaceholder]="'Buscar...'"
+      name="phone"
+      formControlName="phone"
+      #phone
+    ></ngx-mat-intl-tel-input>
+    <mat-hint>e.g. {{ phone?.selectedCountry?.placeHolder }}</mat-hint>
+  </mat-form-field>
+  <mat-form-field class="example-full-width mb-3" appearance="legacy">
+    <mat-label>Email</mat-label>
+    <input matInput placeholder="some@gmail.com" formControlName="email" />
+  </mat-form-field>
+
+  <div
+    *ngFor="let t of beneficiaries?.controls; let i = index"
+    formArrayName="beneficiaries"
+    class="beneficiaries mb-3"
+  >
+    <ng-container [formGroupName]="i">
+      <div class="beneficiaries__name">
+        <label for="name"> Full Name </label>
+        <input
+          formControlName="name"
+          class="input"
+          type="text"
+          placeholder="John"
+        />
+      </div>
+      <div>
+        <label for="dob">Date of Birth</label>
+        <div class="beneficiaries__dob input">
+          <span class="datepicker-toggle">
+            <span class="datepicker-toggle-button"></span>
+            <input formControlName="dob" type="date" class="datepicker-input" />
+          </span>
+          <span
+            *ngIf="!beneficiaries?.controls[i].value.dob"
+            class="placeholder"
+          >
+            MM/DD/YYYY
+          </span>
+          <span *ngIf="beneficiaries?.controls[i].value.dob" class="value">
+            {{ beneficiaries?.controls[i].value.dob }}
+          </span>
+        </div>
+      </div>
+
+      <div class="beneficiaries__snn">
+        <select formControlName="snn" class="input" name="snn">
+          <option selected>SNN</option>
+          <option value="other">other</option>
+        </select>
+      </div>
+      <div class="beneficiaries__optional">
+        <input
+          type="text"
+          class="input"
+          placeholder="Optional"
+          formControlName="optional"
+        />
+      </div>
+      <div class="beneficiaries__relationship">
+        <label for="relationship"> Relationship </label>
+        <select
+          formControlName="relationship"
+          class="input"
+          name="relationship"
+        >
+          <option selected>Trust</option>
+          <option value="other">other</option>
+        </select>
+      </div>
+      <div class="beneficiaries__percent">
+        <input
+          onKeyPress="if(this.value.length==3) return false;"
+          placeholder="0"
+          formControlName="percent"
+          class="input"
+          type="text"
+        />
+        <span>%</span>
+      </div>
+    </ng-container>
+  </div>
+</form>

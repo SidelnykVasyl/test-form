@@ -1,0 +1,103 @@
+<p>BENEFICIARIES</p>
+
+<h3 class="beneficiaries__title">Primary Beneficiaries</h3>
+<form [formGroup]="form">
+  <div
+    *ngFor="let t of beneficiaries?.controls; let i = index"
+    formArrayName="beneficiaries"
+    class="beneficiaries mb-3"
+  >
+    <ng-container [formGroupName]="i">
+      <div class="beneficiaries__name">
+        <label for="name"> Full Name </label>
+        <input
+          formControlName="name"
+          class="input"
+          type="text"
+          placeholder="John"
+        />
+      </div>
+      <div>
+        <label for="dob">Date of Birth</label>
+        <div class="beneficiaries__dob input">
+          <span class="datepicker-toggle">
+            <span class="datepicker-toggle-button"></span>
+            <input formControlName="dob" type="date" class="datepicker-input" />
+          </span>
+          <span
+            *ngIf="!beneficiaries?.controls[i].value.dob"
+            class="placeholder"
+          >
+            MM/DD/YYYY
+          </span>
+          <span *ngIf="beneficiaries?.controls[i].value.dob" class="value">
+            {{ beneficiaries?.controls[i].value.dob }}
+          </span>
+        </div>
+      </div>
+
+      <div class="beneficiaries__snn">
+        <select formControlName="snn" class="input" name="snn">
+          <option selected>SNN</option>
+          <option value="other">other</option>
+        </select>
+      </div>
+      <div class="beneficiaries__optional">
+        <input
+          type="text"
+          class="input"
+          placeholder="Optional"
+          formControlName="optional"
+        />
+      </div>
+      <div class="beneficiaries__relationshipß">
+        <label for="relationship"> Relationship </label>
+        <select
+          formControlName="relationship"
+          class="input"
+          name="relationship"
+        >
+          <option selected>Trust</option>
+          <option value="other">other</option>
+        </select>
+      </div>
+      <div class="beneficiaries__percent">
+        <input
+          onKeyPress="if(this.value.length==3) return false;"
+          placeholder="0"
+          formControlName="percent"
+          class="input"
+          type="text"
+        />
+        <span>%</span>
+      </div>
+      <div class="beneficiaries__actions">
+        <ng-container *ngIf="beneficiaries?.controls[i].valid">
+          <button
+            *ngIf="beneficiaries?.controls[i]"
+            (click)="remove()"
+            class="close"
+          ></button>
+          <button
+            *ngIf="!this.isDisabled && !beneficiariesArr[i] || beneficiaries?.controls.length == 1"
+            (click)="addBeneficiaries()"
+            class="apply"
+          ></button>
+        </ng-container>
+      </div>
+    </ng-container>
+  </div>
+  <div class="beneficiaries__total" [class.approve]="total === MAX_VALUE">
+    <img *ngIf="total === MAX_VALUE" src="../../../assets/check.svg" alt="" />
+    Primary total:
+    <span>{{ total }}%</span>
+  </div>
+</form>
+
+<button
+  class="submit"
+  [disabled]="total !== MAX_VALUE || !form.valid"
+  (click)="goFinalStep()"
+>
+  Next
+</button>

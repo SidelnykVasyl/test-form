@@ -1,0 +1,44 @@
+<div class="wrapper">
+  <div class="aside-nav">
+    <ul>
+      <li
+        [class.checked]="(userService.getUserForm() | async)?.personalInfo"
+        [routerLinkActive]="'is-active'"
+        routerLink="personal-info"
+      >
+        Personal information
+      </li>
+      <li
+        [class.checked]="(userService.getUserForm() | async)?.contactInfo"
+        [class.disabled]="
+          !(userService.getUserForm() | async)?.contactInfo && step != 1
+        "
+        [routerLinkActive]="'is-active'"
+        routerLink="contact-info"
+      >
+        Contact information
+      </li>
+      <li
+        [class.disabled]="
+          !(userService.getUserForm() | async)?.contactInfo && step != 2
+        "
+        [class.checked]="(userService.getUserForm() | async)?.beneficiaries"
+        [routerLinkActive]="'is-active'"
+        routerLink="beneficiaries"
+      >
+        Beneficiaries
+      </li>
+      <li
+        [class.disabled]="step < 3"
+        [class.checked]="step > 3"
+        [routerLinkActive]="'is-active'"
+        routerLink="review"
+      >
+        Review
+      </li>
+    </ul>
+  </div>
+  <div class="content">
+    <router-outlet></router-outlet>
+  </div>
+</div>
